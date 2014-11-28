@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Taxonomy</title>
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,700">
+  <style>
+  {% block style %}
+    body {
+      font-family: 'Roboto', sans-serif;
+    }
+  {% endblock style %}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button
+            type="button"
+            class="navbar-toggle collapsed"
+            data-toggle="collapse"
+            data-target="#navbar"
+            aria-expanded="false"
+            aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Taxonomy</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          {% block navbar %}
+          {% endblock navbar %}
+          <form class="navbar-form navbar-right"
+            role="search"
+            method="post"
+            action="/search">
+            <div class="form-group">
+              <input
+                type="search"
+                class="form-control"
+                placeholder="Search"
+                name="search"{% block search %}{% endblock search %}>
+            </div>
+          </form>
+        </div>
+      </div>
+    </nav>
+    {% block content %}
+    <div class="list-group">
+      {% for code in codes %}
+      <a href="/{{code.code}}/" class="list-group-item">
+        <h4 class="list-group-item-heading">{{code.name}}</h4>
+        <p class="list-group-item-text hidden-xs">{{code.definition}}</p>
+      </a>
+      {% endfor %}
+    </div>
+    {% endblock content %}
+  </div>
+</body>
+</html>

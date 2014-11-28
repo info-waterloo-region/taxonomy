@@ -1,0 +1,70 @@
+{% extends "template.html" %}
+
+{% block style %}
+  {{super()}}
+  .navbar-nav li:hover {
+      background: white;
+  }
+  .navbar-nav li.navbar-text:hover {
+    background: none;
+  }
+{% endblock style %}
+
+{% block navbar %}
+  <ul class="nav navbar-nav">
+    {% for crumb in code.crumbs %}
+    <li><a href="/{{crumb[0]}}">{{crumb[1]}}</a></li>
+    {% endfor %}
+    <li class="navbar-text hidden-xs"><strong>{{code.last_crumb}}</strong></li>
+  </ul>
+{% endblock navbar %}
+
+{% block content %}
+  <h2>
+    {{code.name}}
+  </h2>
+  <p class="lead text-muted">
+    {{code.definition}}
+  </p>
+
+  {% if code.used_for[0] is not none %}
+  <p>
+    Used for: {{code.used_for|join(", ")}}
+  </p>
+  {% endif %}
+
+  <div class="row">
+    {% if code.subs %}
+    <div class="col-xs-12 col-md-6">
+      <h3>Narrower Terms</h3>
+      <table class="table">
+        <tbody>
+        {% for sub in code.subs %}
+          <tr>
+            <td>{{sub[0]}}</td>
+            <td><a href="/{{sub[0]}}">{{sub[1]}}</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+
+    {% if code.see_also %}
+    <div class="col-xs-12 col-md-6">
+      <h3>See Also</h3>
+      <table class="table">
+        <tbody>
+        {% for also in code.see_also %}
+          <tr>
+            <td>{{also[0]}}</td>
+            <td><a href="/{{also[0]}}">{{also[1]}}</a></td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+  </div>
+{% endblock content %}
+
